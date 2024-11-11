@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subdomain SPF Checker</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { width: 60%; margin: auto; padding-top: 50px; }
+        h1 { text-align: center; }
+        .form-group { margin-bottom: 20px; }
+        input[type="text"] { width: 100%; padding: 10px; font-size: 16px; }
+        button { padding: 10px 20px; font-size: 16px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+        .result { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Subdomain SPF Checker</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="domain">Enter Domain (e.g., example.com):</label>
+                <input type="text" name="domain" id="domain" required>
+            </div>
+            <button type="submit">Check SPF Records</button>
+        </form>
+
+        {% if spf_results is not none %}
+            <div class="result">
+                {% if spf_results %}
+                    <h3>SPF records found for subdomains of {{ domain }}:</h3>
+                    <ul>
+                        {% for result in spf_results %}
+                            <li>{{ result }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No SPF records found for any subdomains of {{ domain }}.</p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
